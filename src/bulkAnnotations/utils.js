@@ -3,7 +3,7 @@ import PolygonGeometry from 'ol/geom/Polygon'
 import Feature from 'ol/Feature'
 import { getTopLeft, getBottomRight } from 'ol/extent'
 
-import { _getCoordinates } from '../annotation'
+import { _getCoordinates, _getPointCoordinates } from '../annotation'
 import {
   _scoord3dCoordinates2geometryCoordinates,
   _geometryCoordinates2scoord3dCoordinates
@@ -90,7 +90,7 @@ export const getPolygonFeature = ({
     /** Jump to the next point: (x, y) if 2 or (x, y, z) if 3 */
     j += coordinateDimensionality - 1
   }
-
+  
   return new Feature({
     geometry: new PolygonGeometry([polygonCoordinates])
   })
@@ -115,7 +115,7 @@ export const getPointFeature = ({
   annotationGroupUID
 }) => {
   const offset = graphicIndex[annotationIndex] - 1
-  const coordinate = _getCoordinates(graphicData, offset, commonZCoordinate)
+  const coordinate = _getPointCoordinates(graphicData, offset, commonZCoordinate)
   const renderableCoordinate = _scoord3dCoordinates2geometryCoordinates(
     coordinate,
     pyramid,

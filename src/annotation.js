@@ -546,9 +546,24 @@ function _getCommonZCoordinate (metadataItem) {
  * @private
  */
 function _getCoordinates (graphicData, offset, commonZCoordinate) {
-  const point = [
+  const point = [  
     graphicData[offset],
     graphicData[offset + 1]
+  ]
+  if (isNaN(commonZCoordinate)) {
+    point.push(graphicData[offset + 2])
+  } else {
+    point.push(commonZCoordinate)
+  }
+  return point
+}
+
+function _getPointCoordinates (graphicData, offset, commonZCoordinate) {
+  const pintX = ( graphicData[offset+5]+graphicData[offset+7])/2.0;
+  const pintY = ( graphicData[offset+6]+graphicData[offset+0])/2.0;
+
+  const point = [  
+    pintY, pintX
   ]
   if (isNaN(commonZCoordinate)) {
     point.push(graphicData[offset + 2])
@@ -794,5 +809,6 @@ export {
   _getCommonZCoordinate,
   _getCoordinateDimensionality,
   _getPoint,
-  _getCoordinates
+  _getCoordinates,
+  _getPointCoordinates
 }
