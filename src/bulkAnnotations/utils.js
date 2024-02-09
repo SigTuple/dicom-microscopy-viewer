@@ -24,7 +24,7 @@ export const getViewportBoundingBox = ({ view, pyramid, affine }) => {
     pyramid,
     affine
   )
-  return {
+    return {
     topLeft: scoord3DCoords[0],
     bottomRight: scoord3DCoords[1]
   }
@@ -136,9 +136,9 @@ export const getPolygonFeature = ({
       pyramid,
       affineInverse
     )
-    polygonCoordinates.push(renderableCoordinate)
+        polygonCoordinates.push(renderableCoordinate)
   }
-  return new Feature({
+    return new Feature({
     geometry: new PolygonGeometry([polygonCoordinates])
   })
 }
@@ -207,13 +207,15 @@ export const getFeaturesFromBulkAnnotations = ({
         offset,
         commonZCoordinate
       )
-      if (!isCoordinateInsideBoundingBox(
-        firstCoordinate,
-        topLeft,
-        bottomRight
-      )) {
-        continue
-      }
+      // Todo: Needs to figure out how handle this case correctly, Ideally this should be not commented out
+      // if (!isCoordinateInsideBoundingBox(
+      //   firstCoordinate,
+      //   topLeft,
+      //   bottomRight
+      // )) {
+      //   console.log("Coordinate skips", firstCoordinate, topLeft, bottomRight)
+      //   continue
+      // }
     }
 
     const feature = featureFunction({
@@ -244,7 +246,7 @@ export const getFeaturesFromBulkAnnotations = ({
 
     features.push(feature)
   }
-
+  
   return features
 }
 
