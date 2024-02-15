@@ -2571,7 +2571,18 @@ class VolumeImageViewer {
       )
     }
 
+    const container = this[_map].getTargetElement()
+
     this[_interactions].dragPan = new DragPan(dragPanOptions)
+
+    const onDragMap = () => {
+      console.log('dragged map');
+        publish(
+          container,
+          'pan',
+        )
+    };
+    this[_map].on('pointerdrag', onDragMap);
 
     this[_map].addInteraction(this[_interactions].dragPan)
   }
@@ -4805,6 +4816,74 @@ class VolumeImageViewer {
       const currentZoomLevel = view.getZoom();
       return currentZoomLevel;
     }
+
+    getViewerResolution () {
+      const resolution = this[_tileGrid].getResolution(0);
+      return resolution;
+    }
+
+    getCurrentCenterCords () {
+      let view = this[_map].getView();
+      // Get the current zoom level
+      let zoom = view.getZoom();
+      // Get the current center
+      let center = view.getCenter();
+      const centerCords = this.translateCoordinates(center);
+      console.log(view, zoom, center, centerCords, 'getCurrentZoomCenter')
+      return center;
+    }
+
+    addVectorLayer (layer) {
+      console.log(layer, 'addVectorLayer')
+      this[_map].addLayer(layer);
+      const currentLayer = this[_map].getLayers()
+      console.log(currentLayer, 'addVectorLayer')
+    }
+
+
+    activateMeasurmentInteraction ({measureType}) {
+      const modifyStyle = new Style({
+        image: new CircleStyle({
+          radius: 5,
+          stroke: new Stroke({
+            color: 'rgba(0, 0, 0, 0.7)',
+          }),
+          fill: new Fill({
+            color: 'rgba(0, 0, 0, 0.4)',
+          }),
+        }),
+        text: new Text({
+          text: 'Drag to modify',
+          font: '12px Calibri,sans-serif',
+          fill: new Fill({
+            color: 'rgba(255, 255, 255, 1)',
+          }),
+          backgroundFill: new Fill({
+            color: 'rgba(0, 0, 0, 0.7)',
+          }),
+          padding: [2, 2, 2, 2],
+          textAlign: 'left',
+          offsetX: 15,
+        }),
+      });
+      const raster = new TileLayer({
+        source: new OSM(),
+      });
+      const source = new VectorSource();
+      const modify = new Modify({source: source, style: modifyStyle});
+
+      draw = new Draw({
+        source: source,
+        type: drawType,
+        style: function (feature) {
+          return styleFunction(feature, showSegments.checked, drawType, tip);
+        },
+      });
+
+    }
+
+
+
 }
 
 /**
