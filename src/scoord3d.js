@@ -234,12 +234,13 @@ class Polygon extends Scoord3D {
     if (options.coordinates.find(c => c.some(item => item < 0))) {
       console.warn('coordinates of Polygon contain negative numbers')
     }
-    const n = options.coordinates.length
-    if ((options.coordinates[0][0] !== options.coordinates[n - 1][0]) ||
-       (options.coordinates[0][1] !== options.coordinates[n - 1][1]) ||
-       (options.coordinates[0][2] !== options.coordinates[n - 1][2])) {
-      throw new Error('First and last coordinate of Polygon must be the same.')
-    }
+    // Anil: It is not following DICOM standards for Polygon (fist and last coordinates should not be same)
+    // const n = options.coordinates.length
+    // if ((options.coordinates[0][0] !== options.coordinates[n - 1][0]) ||
+    //    (options.coordinates[0][1] !== options.coordinates[n - 1][1]) ||
+    //    (options.coordinates[0][2] !== options.coordinates[n - 1][2])) {
+    //   throw new Error('First and last coordinate of Polygon must be the same.')
+    // }
     super({
       coordinates: options.coordinates,
       frameOfReferenceUID: options.frameOfReferenceUID,
