@@ -3,7 +3,7 @@ import PolygonGeometry from 'ol/geom/Polygon'
 import Feature from 'ol/Feature'
 import { getTopLeft, getBottomRight } from 'ol/extent'
 
-import { _getCoordinates } from '../annotation'
+import { _getCoordinates, _getPointCoordinates } from '../annotation'
 import {
   _scoord3dCoordinates2geometryCoordinates,
   _geometryCoordinates2scoord3dCoordinates
@@ -24,7 +24,7 @@ export const getViewportBoundingBox = ({ view, pyramid, affine }) => {
     pyramid,
     affine
   )
-  return {
+    return {
     topLeft: scoord3DCoords[0],
     bottomRight: scoord3DCoords[1]
   }
@@ -57,6 +57,52 @@ export const isCoordinateInsideBoundingBox = (
  * @param {*} param0
  * @returns
  */
+// export const getPolygonFeature = ({
+//   graphicIndex,
+//   graphicData,
+//   numberOfAnnotations,
+//   annotationIndex,
+//   pyramid,
+//   affineInverse,
+//   commonZCoordinate,
+//   coordinateDimensionality,
+//   annotationGroupUID
+// }) => {
+//   const offset = graphicIndex[annotationIndex] - 1
+
+//   let annotationLength
+//   if (annotationIndex < numberOfAnnotations - 1) {
+//     annotationLength = graphicIndex[annotationIndex + 1] - offset
+//   } else {
+//     annotationLength = graphicData.length
+//   }
+
+//   const polygonCoordinates = []
+//   const roof = annotationLength // sumit - Removed Offset because we are not considering z coordinate
+//   console.log("Anil0", roof, offset)
+//   for (let j = offset; j < roof; j++) {
+
+//     console.info("Anil1", graphicData)
+
+//     const coordinate = _getCoordinates(graphicData, j === (offset + annotationLength - 1) ? offset : j, commonZCoordinate)
+//     console.info("Anil2", coordinate)
+
+//     const renderableCoordinate = _scoord3dCoordinates2geometryCoordinates(
+//       coordinate,
+//       pyramid,
+//       affineInverse
+//     )
+//     console.info("Anil3", renderableCoordinate)
+//     polygonCoordinates.push(renderableCoordinate)
+//     /** Jump to the next point: (x, y) if 2 or (x, y, z) if 3 */
+//     j += coordinateDimensionality - 1
+//   }
+//   console.log("Anil4", polygonCoordinates)
+//   return new Feature({
+//     geometry: new PolygonGeometry([polygonCoordinates])
+//   })
+// }
+
 export const getPolygonFeature = ({
   graphicIndex,
   graphicData,
@@ -76,22 +122,23 @@ export const getPolygonFeature = ({
   } else {
     annotationLength = graphicData.length
   }
+  const roof = annotationLength 
+  
+  let chunk = roof === 198 ? roof-1 : 7 //Anil: check to Identify Circle and Square
 
   const polygonCoordinates = []
-  const roof = annotationLength // sumit - Removed Offset because we are not considering z coordinate
-  for (let j = offset; j < roof; j++) {
-    const coordinate = _getCoordinates(graphicData, j === (offset + annotationLength - 1) ? offset : j, commonZCoordinate)
+  for (let j = offset; j < chunk+offset; j+=2) {
+
+    const coordinate = _getCoordinates(graphicData,  j , commonZCoordinate)
+
     const renderableCoordinate = _scoord3dCoordinates2geometryCoordinates(
       coordinate,
       pyramid,
       affineInverse
     )
-    polygonCoordinates.push(renderableCoordinate)
-    /** Jump to the next point: (x, y) if 2 or (x, y, z) if 3 */
-    j += coordinateDimensionality - 1
+        polygonCoordinates.push(renderableCoordinate)
   }
-
-  return new Feature({
+    return new Feature({
     geometry: new PolygonGeometry([polygonCoordinates])
   })
 }
@@ -115,7 +162,7 @@ export const getPointFeature = ({
   annotationGroupUID
 }) => {
   const offset = graphicIndex[annotationIndex] - 1
-  const coordinate = _getCoordinates(graphicData, offset, commonZCoordinate)
+  const coordinate = _getPointCoordinates(graphicData, offset, commonZCoordinate)
   const renderableCoordinate = _scoord3dCoordinates2geometryCoordinates(
     coordinate,
     pyramid,
@@ -160,13 +207,15 @@ export const getFeaturesFromBulkAnnotations = ({
         offset,
         commonZCoordinate
       )
-      if (!isCoordinateInsideBoundingBox(
-        firstCoordinate,
-        topLeft,
-        bottomRight
-      )) {
-        continue
-      }
+      // Todo: Needs to figure out how handle this case correctly, Ideally this should be not commented out
+      // if (!isCoordinateInsideBoundingBox(
+      //   firstCoordinate,
+      //   topLeft,
+      //   bottomRight
+      // )) {
+      //   console.log("Coordinate skips", firstCoordinate, topLeft, bottomRight)
+      //   continue
+      // }
     }
 
     const feature = featureFunction({
@@ -197,7 +246,7 @@ export const getFeaturesFromBulkAnnotations = ({
 
     features.push(feature)
   }
-
+  
   return features
 }
 
