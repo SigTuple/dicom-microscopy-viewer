@@ -226,6 +226,7 @@ function _getRotation (metadata) {
  * @param {Object} styleOptions.fill - Style options for body the geometry
  * @param {number[]} styleOptions.fill.color - RGBA color of the body
  * @param {Object} styleOptions.image - Style options for image
+ * @param {number[]} styleOptions.stroke.dashArray
  * @return {Style} OpenLayers style
  *
  * @private
@@ -237,7 +238,13 @@ function _getOpenLayersStyle (styleOptions) {
     const strokeOptions = {
       color: styleOptions.stroke.color,
       width: styleOptions.stroke.width
+
     }
+    
+    if ('dashArray' in styleOptions.stroke) {
+      strokeOptions.lineDash = styleOptions.stroke.dashArray;
+    }
+
     const stroke = new Stroke(strokeOptions)
     style.setStroke(stroke)
   }
@@ -477,7 +484,8 @@ function _updateFeatureMeasurements (map, feature, pyramid, affine) {
  * @param {Object} styleOptions.fill - Style options for body the geometry
  * @param {number[]} styleOptions.fill.color - RGBA color of the body
  * @param {Object} styleOptions.image - Style options for image
- *
+ * @param {number[]} styleOptions.stroke.dashArray
+
  * @private
  */
 function _setFeatureStyle (feature, styleOptions) {
@@ -2827,6 +2835,7 @@ class VolumeImageViewer {
    * the geometry
    * @param {number[]} styleOptions.stroke.color - RGBA color of the contour
    * @param {number} styleOptions.stroke.width - Width of the contour
+   * @param {number[]} styleOptions.stroke.dashArray
    * @param {Object} [styleOptions.fill] - Style options for the body of the
    * geometry
    * @param {number[]} styleOptions.fill.color - RGBA color of the body
