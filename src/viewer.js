@@ -3584,10 +3584,13 @@ class VolumeImageViewer {
    * @param {Object} styleOptions - Style options
    * @param {number} [styleOptions.opacity] - Opacity
    * @param {number[]} [styleOptions.color] - RGB color triplet
+   * @param {number[]} [styleOptions.width] - width
    * @param {Object} [styleOptions.measurement] - Selected measurement for
    * pseudo-coloring of annotations using measurement values
    */
   setAnnotationGroupStyle (annotationGroupUID, styleOptions = {}) {
+
+    console.log("Anilll", styleOptions)
     if (!(annotationGroupUID in this[_annotationGroups])) {
       throw new Error(
         'Cannot set style of annotation group. ' +
@@ -3760,11 +3763,11 @@ class VolumeImageViewer {
             opacity: annotationGroup.style.opacity
           }
         }
-
+        // Anil: Annotation width
         const polygonStyle = new Style({
           stroke: new Stroke({
             color: `rgba(${annotationGroup.style.color[0]}, ${annotationGroup.style.color[1]}, ${annotationGroup.style.color[2]}, ${annotationGroup.style.opacity})`,
-            width: 1,
+            width: styleOptions.width,
             opacity: annotationGroup.style.opacity
           }),
           fill: new Fill({
