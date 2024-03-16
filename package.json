@@ -1,5 +1,5 @@
 {
-  "name": "dicom-microscopy-viewer",
+  "name": "@sigtuple/dicom-microscopy-viewer",
   "version": "0.45.1",  
   "license": "MIT",
   "author": "ImagingDataCommons",
