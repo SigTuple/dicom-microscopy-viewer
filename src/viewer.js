@@ -212,8 +212,8 @@ function _getRotation (metadata) {
     orientation: metadata.ImageOrientationSlide
   })
   // We want the slide oriented horizontally with the label on the right side
-  const correction = 90 * (Math.PI / 180)
-  return angle + correction
+  // const correction = 0 * (Math.PI / 180)
+  return angle 
 }
 
 /**
