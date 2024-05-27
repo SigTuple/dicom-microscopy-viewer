@@ -2159,6 +2159,7 @@ class VolumeImageViewer {
    * @param {Object} options - Options.
    * @param {number} options.level - Zoom level.
    * @param {number[]} options.position - X, Y coordinates in slide coordinate system.
+   * @param {number[]} options.duration - Animation duration
    */
   navigate ({ level, position, duration }) {
     if (level > this.numLevels) {
