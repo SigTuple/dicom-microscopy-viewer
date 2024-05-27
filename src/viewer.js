@@ -2173,7 +2173,7 @@ class VolumeImageViewer {
       )
     }
     const view = this[_map].getView()
-    view.animate({ zoom: level, center: coordinates, duration: 0})
+    view.animate({ zoom: level, center: coordinates, duration: duration})
   }
 
   /**
