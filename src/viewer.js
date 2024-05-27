@@ -2160,7 +2160,7 @@ class VolumeImageViewer {
    * @param {number} options.level - Zoom level.
    * @param {number[]} options.position - X, Y coordinates in slide coordinate system.
    */
-  navigate ({ level, position }) {
+  navigate ({ level, position, duration }) {
     if (level > this.numLevels) {
       throw new Error('Argument "level" exceeds number of resolution levels.')
     }
@@ -2173,7 +2173,7 @@ class VolumeImageViewer {
       )
     }
     const view = this[_map].getView()
-    view.animate({ zoom: level, center: coordinates })
+    view.animate({ zoom: level, center: coordinates, duration: 0})
   }
 
   /**
