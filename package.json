@@ -1,6 +1,6 @@
 {
   "name": "dicom-microscopy-viewer",
-  "version": "0.45.1",  
+  "version": "0.45.1",
   "license": "MIT",
   "author": "ImagingDataCommons",
   "homepage": "https://github.com/imagingdatacommons/dicom-microscopy-viewer#readme",
@@ -59,6 +59,7 @@
     "babel-eslint": "10.1.0",
     "babel-jest": "27.5",
     "babel-loader": "^8.2.3",
+    "babel-plugin-module-resolver": "^5.0.2",
     "chai": "^4.3.4",
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "9.0.1",
@@ -80,13 +81,13 @@
     "@cornerstonejs/codec-charls": "^1.2.3",
     "@cornerstonejs/codec-libjpeg-turbo-8bit": "^1.2.2",
     "@cornerstonejs/codec-openjpeg": "^1.2.2",
+    "@sigtuple/ol": "^0.12.1",
     "colormap": "^2.3",
     "dcmjs": "^0.29.8",
     "dicomicc": "^0.1",
     "dicomweb-client": "^0.10.3",
     "image-type": "^4.1",
     "mathjs": "^11.2",
-    "ol": "^7.5.1",
     "uuid": "^9.0"
   }
 }
