@@ -5,6 +5,9 @@
   "author": "ImagingDataCommons",
   "homepage": "https://github.com/imagingdatacommons/dicom-microscopy-viewer#readme",
   "description": "Interactive web-based viewer for DICOM Microscopy Images",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
   "bugs": {
     "url": "https://github.com/imagingdatacommons/dicom-microscopy-viewer/issues"
   },
