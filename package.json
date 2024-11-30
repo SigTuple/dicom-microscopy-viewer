@@ -84,7 +84,7 @@
     "@cornerstonejs/codec-charls": "^1.2.3",
     "@cornerstonejs/codec-libjpeg-turbo-8bit": "^1.2.2",
     "@cornerstonejs/codec-openjpeg": "^1.2.2",
-    "@sigtuple/ol": "^0.12.1",
+    "@sigtuple/ol": "^0.12.2",
     "colormap": "^2.3",
     "dcmjs": "^0.27",
     "dicomicc": "^0.1",
